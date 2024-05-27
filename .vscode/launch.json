@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "C/C++: debug active file",
+        "type": "vgdb",
+        "request": "launch",
+        "program": "${fileBasenameNoExtension}.out",
+        "args": [],
+        "cwd": "${fileDirname}",
+        "externalConsole": false,
+        "debugger": "gdb"
+      }
+    ]
+  }
