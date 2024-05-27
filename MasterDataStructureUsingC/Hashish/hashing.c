@@ -57,84 +57,58 @@ TreeNode *binarySearchTreeConstructor(int *inputData, int size)
         root->left = NULL;
         root->right = NULL;
 
-        TreeNode *temp;
+        TreeNode *temp, *parent;
 
         for (i = 1; i < size; i++)
         {
             temp = root;
+            parent = NULL;
 
-            // create first child node
-            if (root->left == NULL && root->right == NULL)
+            // create child nodes
+            TreeNode *newChildNode = (TreeNode *)malloc(sizeof(TreeNode));
+            assert(newChildNode);
+
+            newChildNode->data = inputData[i];
+            newChildNode->left = NULL;
+            newChildNode->right = NULL;
+
+            while (temp != NULL)
             {
+                parent = temp;
+                temp = (newChildNode->data >= temp->data) ? temp->right : temp->left;
+            }
 
-                TreeNode *firstChildNode = (TreeNode *)malloc(sizeof(TreeNode));
-
-                assert(firstChildNode);
-
-                firstChildNode->data = inputData[i];
-                firstChildNode->left = NULL;
-                firstChildNode->right = NULL;
-
-                if (firstChildNode->data >= root->data)
-                {
-                    root->right = firstChildNode;
-                }
-                else
-                {
-                    root->left = firstChildNode;
-                }
+            // Insert the new node
+            if (newChildNode->data < parent->data)
+            {
+                parent->left = newChildNode;
             }
             else
             {
-                TreeNode *newChildNode = (TreeNode *)malloc(sizeof(TreeNode));
-                assert(newChildNode);
-
-                newChildNode->data = inputData[i];
-                newChildNode->left = NULL;
-                newChildNode->right = NULL;
-
-                if (newChildNode->data >= root->data)
-                {
-                    temp = temp->right;
-                    do
-                    {
-                        if (newChildNode->data >= temp->data)
-                        {
-                            temp->right = newChildNode;
-                            break;
-                        }
-                        else
-                        {
-                            temp->left = newChildNode;
-                            break;
-                        }
-
-                    } while (temp->right != NULL || temp->left != NULL);
-                }
-                else
-                {
-                    do
-                    {
-                        temp = temp->left;
-
-                        if (newChildNode->data >= temp->data)
-                        {
-                            temp->right = newChildNode;
-                            break;
-                        }
-                        else
-                        {
-                            temp->left = newChildNode;
-                            break;
-                        }
-
-                    } while (temp->right != NULL || temp->left != NULL);
-                }
+                parent->right = newChildNode;
             }
         }
-
         return root;
     }
+}
+
+void printTree(TreeNode *top)
+{
+    static int counter = 1;
+
+    if (top == NULL)
+    {
+        return;
+    }
+
+    printf("%d  %d\n", top->data, counter);
+    counter++;
+
+    // Recursively print the left subtree
+    printTree(top->left);
+
+    // Recursively print the right subtree
+    printTree(top->right);
 }
 
 int main()
@@ -151,5 +125,6 @@ int main()
 
     TreeNode *top = binarySearchTreeConstructor(inputArray, arrSize);
 
+    printTree(top);
     return 0;
 }
