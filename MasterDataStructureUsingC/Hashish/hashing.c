@@ -9,7 +9,7 @@ typedef struct treeNode
     struct treeNode *left, *right;
 } TreeNode;
 
-void checkChildren(TreeNode *temp)
+/* void checkChildren(TreeNode *temp)
 {
     if (temp == NULL)
     {
@@ -36,7 +36,7 @@ void checkChildren(TreeNode *temp)
     {
         printf("Both right and left are NULL.\n");
     }
-}
+} */
 
 TreeNode *binarySearchTreeConstructor(int *inputData, int size)
 {
